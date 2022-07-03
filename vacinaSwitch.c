@@ -54,7 +54,7 @@ void listarVacinados(struct vacina * cadastro, int * nCadastro){
   printf("\n|==|==|==|==|==| Fim da listagem |==|==|==|==|==|\n\n"); 
 };
 
-//Procedimento para fazer busca
+//Procedimento para fazer busca por CPF
 void buscaCPF(struct vacina * cadastro, int * nCadastro){
   char cpfBuscado[30];
   int count;
