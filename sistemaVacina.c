@@ -3,114 +3,120 @@
 #include <locale.h>
 #include <string.h>
 
-//Criando a estrutura para receber os cadastro de vacina
-struct vacina
-{
-
-    int codigo;
-    char nome[100];
-    char CPF[15];
-    char vacina[30];
-    char data[10];
-    int lote;
-    
+//Criando uma struct com os dados para o tipo vacina
+struct vacina{
+  int codeNumber, lote;
+  char name[100];
+  char CPF[15];
+  char model[40];
+  char date[12];     
 };
 
-int main()
-{
-	setlocale(LC_ALL, "Portuguese");
-	
-    int option, nCadastro, i, j, acha, buscado;
-    char busca[15];
-    struct vacina cadastro[nCadastro];
+//Procedimento (subrotina) para efetuar o cadastro
+void cadastrar(struct vacina * cadastro, int * nCadastro){
+
+  printf("|==|==|==|==|==| Opção cadastrar vacina selecionado |==|==|==|==|==|\n\n");
+  printf("o nCadastro é: %d \n", * nCadastro);
+  //Início da entrada de dados
+  printf("Digite o número da Carteira de Vacinação: ");  
+    scanf("%d", &cadastro[* nCadastro].codeNumber);
+    __fpurge(stdin);
+  printf("\nDigite o nome completo do vacinado: ");
+    scanf("%s", * &cadastro[* nCadastro].name);
+    __fpurge(stdin);
+  printf("\nDigite o CPF do vacinado no formato 000.000.000-00: ");
+    scanf("%s", * &cadastro[* nCadastro].CPF);
+    __fpurge(stdin);
+  printf("\nDigite a fabricante da vacina (ex. Pfizer, Modena, Astrazeneca): ");
+    scanf("%s", * &cadastro[* nCadastro].model);
+    __fpurge(stdin);
+  printf("\nDigite a data de hoje, no formato DD/MM/AA: ");
+    scanf("%s", * &cadastro[* nCadastro].date);
+    __fpurge(stdin);
+  printf("\nDigite o lote da vacina (somente números): ");
+    scanf("%d", &cadastro[* nCadastro].lote); 
+  //Fim da entrada de dados  
+  printf("Cadastro realizado com sucesso \n\n");
+     
+ };
+
+//Procedimento para listar os vacinados cadastrados;
+void listarVacinados(struct vacina * cadastro, int * nCadastro){
+  
+system("clear");
+  printf("|==|==|==|==|==| Cadastro de pessoas vacinadas |==|==|==|==|==| \n\n");
+  int count;
+  for (count = 0; count < * nCadastro; count++){
     
-    option = 0;
-    nCadastro = 0;
-        
-    printf("<#>--- Bem vindo ao sistema de cadastro de vacina ---<#> \n");
-   			
-        while (option != 4){
+  printf("*******************************");
+  printf("\nNº Carteira Vacina: (%d)\nNome: %s\nCPF: %s\nFabricante: %s\nData: %s\nLote: %d \n",  cadastro[count].codeNumber, cadastro[count].name, cadastro[count].CPF, cadastro[count].model, cadastro[count].date, cadastro[count].lote);
+     
+  };
+  printf("\n|==|==|==|==|==| Fim da listagem |==|==|==|==|==|\n\n"); 
+};
 
-            printf("\n\n Escolha uma opção abaixo: \n [1] ==> Cadastro de Vacina. \n [2] ==> Listagem de Vacinados. \n [3] ==> Consulta de Vacinados por CPF. \n [4] ==> Sair do Sistema. \n Opção: ");
-			scanf("%d", &option);
-			
-            if(option == 1){
-                system("cls");
-               
-                printf("Digite os dados abaixo para cadastrar o vacinado: \n\n");
-                printf("Código da Carteira de Vacinação (somente números): \n");
-                scanf("%d", &cadastro[nCadastro].codigo);
-                fflush(stdin);
-                printf("\n### Nome completo:\n");
-                scanf("%100[^\n]s", &cadastro[nCadastro].nome);
-                fflush(stdin);
-                printf("\n### CPF no formato 000.000.000-00:\n");
-                scanf("%15[^\n]s", &cadastro[nCadastro].CPF);
-                fflush(stdin);
-                printf("\n### Digite o fabricante da vacina - Ex: Pfizer, Astrazeneca, Coronavac, etc: \n");
-                scanf("%30[^\n]s", &cadastro[nCadastro].vacina);
-                fflush(stdin);
-                printf("\n### Digite a data no formato DD/MM/AAAA: \n");
-                scanf("%10[^\n]s", &cadastro[nCadastro].data);
-                fflush(stdin);
-                printf("\n### Digite o lote (somente números): \n");
-                scanf("%d", &cadastro[nCadastro].lote);
-                fflush(stdin);
-                printf("\n### Cadastro concluído ###\n");
-                                
-                nCadastro++;             
-                
-            }else{
-            	
-            	if(option == 2){
-            		
-            	system("cls");
-            	printf("Listagem de pessoas vacinadas: \n");
-            	
-            	for (i = 0; i<nCadastro; i++){
-            		printf("\n <<<<<<<< VACINADO Nº 00%d >>>>>>>> \n\n", i+1);
-            		printf("1) Carteira Vacinação: %d \n", cadastro[i].codigo);
-            		printf("2) Nome: %s \n", cadastro[i].nome);
-            		printf("3) CPF: %s \n", cadastro[i].CPF);
-            		printf("4) Fabricante vacina: %s \n", cadastro[i].vacina);
-            		printf("5) Data Vacinação: %s \n", cadastro[i].data);
-            		printf("6) Lote: %d \n", cadastro[i].lote);
-            		
-            	
-			}
-        }else{
-        	if(option == 3){
-        		system("cls");
-        		printf("Digite o CPF para realizar o registro da vacina: \n CPF: ");
-        		scanf("%s", busca);
-        		fflush(stdin);
-        		acha == 0;
-        		
-        		printf("%s \n", busca);
-        		printf("%s \n", cadastro[0].CPF);
-        		printf("%s \n", cadastro[1].CPF);
-        		
-        		acha = atoi(cadastro[0].CPF);
-        		buscado = atoi(busca);
-        		printf("%d", acha);
-        		printf("%d", buscado);
-        		
-        		
-        		if(buscado == acha){
-        			printf("Achei!");
-				}else{
-					printf("Não Achei");
-				}
-        		
-					
-			}else{
-				if(option == 4){
-					printf("Saindo do Sistema");
-				}
-			}
-		}
-	} 
+//Procedimento para fazer busca
+void buscaCPF(struct vacina * cadastro, int * nCadastro){
+  
+system("clear");
+  char cpfBuscado[30];
+  int count = 0;  
+  int achar = 0;
+
+  printf("Digite o número do CPF que deseja buscar: ");
+  scanf("%s", cpfBuscado);
+  
+  printf("\nO CPF buscado é: %s \n", cpfBuscado);
+
+  /*for (count = 0; count < *nCadastro; count++)
+    printf("%d \n", strcmp(cadastro[count].CPF, cpfBuscado));*/
+
+     while((count <= *nCadastro) && (achar == 0)){
+    if (strcmp(cpfBuscado,cadastro[count].CPF) == 0){
+      achar = 1;
+    }else{
+      count++;
+    };
+  }
+  if (achar == 1){
+    printf("Encontrado, os dados buscados são: \n");
+    printf("\nNº Carteira Vacina: (%d)\nNome: %s\nCPF: %s\nFabricante: %s\nData: %s\nLote: %d \n",  cadastro[count].codeNumber, cadastro[count].name, cadastro[count].CPF, cadastro[count].model, cadastro[count].date, cadastro[count].lote);
+    
+  }else{
+    printf("Não achei! \n");
+  } 
 }
+ 
+int main(void) {
+  //Criação do menu utilizando switch
 
-return 0;
+  setlocale(LC_ALL, "Portuguese");
+  int option = 0, nCadastro = 0;
+       
+  struct vacina cadastro;     
+
+  printf(" #======# Bem vindo ao sistema de Vacinas! (v 1.0.) #======# \n\n");  
+  
+  while(option != 4){
+    printf("Escolha uma das opções abaixo: \n");
+    printf(" 1) ===> Cadastro de vacinados \n 2) ===> Listagem dos vacinados \n 3) ===> Buscar vacinado pelo CPF \n 4) ===> Sair do Sistema \n Digite a opção:  ");
+    scanf("%d", &option);
+
+  switch(option){
+    case 1: system("clear");
+            cadastrar(&cadastro, &nCadastro);
+            nCadastro++;
+    break;
+    case 2: listarVacinados(&cadastro, &nCadastro);
+    break;
+    case 3: buscaCPF(&cadastro, &nCadastro);
+    break;
+    case 4: printf("Obrigado por usar o sistema!");
+    break;
+    default: printf("Opção inválida! \n\n");
+      return main();
+      
+    }
+  }     
+  return 0;
 }
